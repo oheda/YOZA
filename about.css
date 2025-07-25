@@ -1,3 +1,11 @@
+/* Base Setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -30,6 +38,7 @@ body {
 .menu {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .menu ul {
@@ -86,7 +95,7 @@ body {
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
   margin-top: 30px;
 }
@@ -144,7 +153,56 @@ footer {
   font-size: 0.9rem;
 }
 
-/* Responsive */
+/* Responsive: Tablets & Mobile */
+@media (max-width: 1024px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+    margin-top: 10px;
+  }
+
+  .menu ul li a {
+    padding: 5px 0;
+  }
+
+  .about-container {
+    padding: 30px 20px;
+    margin: 50px 20px;
+  }
+
+  .about-container h1 {
+    font-size: 28px;
+  }
+
+  .about-container p {
+    font-size: 16px;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .timeline-item h3 {
+    font-size: 18px;
+  }
+
+  .timeline-item p {
+    font-size: 15px;
+  }
+
+  footer {
+    font-size: 0.85rem;
+    padding: 20px 10px;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar {
     flex-wrap: nowrap;
@@ -153,51 +211,94 @@ footer {
 
   .nav-links {
     flex-direction: row;
+    flex-wrap: nowrap;
     gap: 1rem;
-  }
-
-  .hero {
-    flex-direction: column;
-    padding: 30px 20px;
-    text-align: center;
-  }
-
-  .hero-text {
-    padding-right: 0;
-    margin-bottom: 20px;
-  }
-
-  .hero-text h1 {
-    font-size: 2.2rem;
-  }
-
-  .hero-images {
     justify-content: center;
+    width: auto;
+    margin-top: 0;
   }
 
-  .why-choose-us {
-    padding: 40px 10px;
+  .hero-content .text h1 {
+    font-size: 2rem;
   }
 
-  .features {
+  .hero-buttons {
+    display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .visit-us {
-    flex-direction: column;
-    padding: 40px 20px;
+  .hero-buttons .btn {
+    margin-bottom: 10px;
   }
 
-  .visit-text {
-    padding-right: 0;
-    text-align: center;
-    margin-bottom: 20px;
+  .menu-item {
+    width: 90%;
   }
 
-  .gallery-images,
-  .gallery-description {
-    flex-direction: column;
+  .highlight-text h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content .text h1 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Responsive: Small Screens / Phones */
+@media (max-width: 600px) {
+  .logo {
+    font-size: 22px;
+  }
+
+  .navbar {
+    padding: 10px 15px;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
+  .menu {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .menu ul {
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    width: auto;
+  }
+
+  .about-container h1 {
+    font-size: 24px;
+  }
+
+  .about-container p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .team-member img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .timeline-item h3 {
+    font-size: 16px;
+  }
+
+  .timeline-item p {
+    font-size: 14px;
+  }
+
+  footer {
+    font-size: 0.8rem;
   }
 }
