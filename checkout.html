@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #fefaf6;
+      padding: 40px;
+      color: #4e342e;
+    }
+
+    .container {
+      display: flex;
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;
+      background: #fff3e6;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.05);
+    }
+
+    .left-section {
+      flex: 2;
+    }
+
+    .right-section {
+      flex: 1;
+      background: #fff8f0;
+      padding: 30px;
+      border-radius: 16px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #5d4037;
+    }
+
+    .section-title {
+      margin: 30px 0 10px;
+      font-weight: 600;
+    }
+
+    input, select {
+      padding: 12px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #4e342e;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 20px;
+    }
+
+    .input-group > div {
+      flex: 1;
+    }
+
+    .delivery-methods,
+    .payment-methods {
+      display: flex;
+      gap: 15px;
+      margin: 10px 0;
+    }
+
+    .delivery-methods button,
+    .payment-methods button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #e0dcd5;
+      cursor: pointer;
+      font-weight: 500;
+      color: #4e342e;
+    }
+
+    .delivery-methods button.active,
+    .payment-methods button.active {
+      background: #8d6e63;
+      color: white;
+    }
+
+    .right-section h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #5d4037;
+    }
+
+    .summary {
+      margin-top: 20px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+
+    .total {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #4e342e;
+    }
+
+    .pay-btn {
+      margin-top: 30px;
+      padding: 14px;
+      background: #6d4c41;
+      color: white;
+      text-align: center;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .cart-item img {
+      width: 50px;
+      border-radius: 6px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+      margin-left: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Section -->
+    <div class="left-section">
+      <h1>Checkout</h1>
+      <p>a checkout is a counter where you pay for things you are buying</p>
+
+      <div class="section-title">1. Contact information</div>
+      <div class="input-group">
+        <div><input type="text" placeholder="First Name" value="" /></div>
+        <div><input type="text" placeholder="Last Name" value="" /></div>
+      </div>
+      <div class="input-group">
+        <div><input type="text" placeholder="Phone Number" value="" /></div>
+        <div><input type="email" placeholder="Email" value="" /></div>
+      </div>
+
+      <div class="section-title">2. Delivery method</div>
+      <div class="delivery-methods">
+        <button class="active">Delivery</button>
+        <button>Self pick up</button>
+      </div>
+      <input type="text" id="orderId" placeholder="Order ID" readonly />
+
+      <div class="section-title">3. Payment method</div>
+      <div class="payment-methods">
+        <button>G Pay</button>
+        <button>COD</button>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-section">
+      <h3>Your Cart</h3>
+      <div class="cart-items" id="cartItems"></div>
+
+      <div class="summary">
+        <div class="summary-item"><span>Subtotal</span><span>₹<span id="cartTotal">0</span></span></div>
+        <div class="summary-item"><span>Delivery</span><span>₹30</span></div>
+        <div class="total">Total: ₹<span id="totalAmount">30</span></div>
+      </div>
+
+      <button class="pay-btn">Pay →</button>
+    </div>
+  </div>
+
+  <script>
+    function generateOrderID() {
+      let existingID = localStorage.getItem('orderID');
+      if (existingID) return existingID;
+
+      const newID = 'ORD' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+      localStorage.setItem('orderID', newID);
+      return newID;
+    }
+
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItemsContainer = document.getElementById('cartItems');
+      const cartTotalEl = document.getElementById('cartTotal');
+      const totalAmountEl = document.getElementById('totalAmount');
+
+      let subtotal = 0;
+      cartItemsContainer.innerHTML = '';
+
+      cart.forEach(item => {
+        const itemTotal = item.qty * item.price;
+        subtotal += itemTotal;
+
+        const itemHTML = `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}" />
+            <div class="cart-item-info">
+              <strong>${item.name}</strong><br>
+              Qty: ${item.qty}
+            </div>
+            <div>₹${itemTotal.toFixed(2)}</div>
+          </div>
+        `;
+        cartItemsContainer.innerHTML += itemHTML;
+      });
+
+      cartTotalEl.textContent = subtotal.toFixed(2);
+      totalAmountEl.textContent = (subtotal + 30).toFixed(2);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCart();
+      document.getElementById('orderId').value = generateOrderID();
+    });
+
+    document.querySelectorAll('.delivery-methods button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.delivery-methods button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    document.querySelectorAll('.payment-methods button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.payment-methods button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+document.querySelector('.pay-btn').addEventListener('click', () => {
+  const firstName = document.querySelector('input[placeholder="First Name"]').value.trim();
+  const lastName = document.querySelector('input[placeholder="Last Name"]').value.trim();
+  const email = document.querySelector('input[placeholder="Email"]').value.trim();
+  const phone = document.querySelector('input[placeholder="Phone Number"]').value.trim();
+  const orderID = document.getElementById('orderId').value;
+  const deliveryBtn = document.querySelector('.delivery-methods .active');
+  const paymentBtn = document.querySelector('.payment-methods .active');
+
+  if (!firstName || !lastName || !email || !phone) {
+    alert("⚠️ Please fill in all contact information.");
+    return;
+  }
+
+  if (!deliveryBtn) {
+    alert("⚠️ Please select a delivery method.");
+    return;
+  }
+
+  if (!paymentBtn) {
+    alert("⚠️ Please select a payment method.");
+    return;
+  }
+
+  const delivery = deliveryBtn.innerText;
+  const payment = paymentBtn.innerText;
+  const total = document.getElementById('totalAmount').innerText;
+
+  alert(`✅ Payment Successful!\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\nOrder ID: ${orderID}\nDelivery Method: ${delivery}\nPayment Method: ${payment}\nTotal Amount: ₹${total}`);
+
+  localStorage.removeItem('orderID');
+});
+
+  </script>
+</body>
+</html>

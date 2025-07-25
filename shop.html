@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FOODEAT | Online Store</title>
+  <link rel="stylesheet" href="shop.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    .cart-icon {
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin-left: 20px;
+      color: #d97629;
+    }
+    #cartPanel {
+      display: none;
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 350px;
+      height: 100vh;
+      background: #fff;
+      box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+      padding: 20px;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    .cart-item img {
+      width: 50px;
+      border-radius: 6px;
+    }
+    .cart-item-info {
+      flex: 1;
+      margin-left: 10px;
+    }
+    .remove-btn {
+      color: red;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="hero-section">
+    <nav class="navbar">
+      <div class="logo">YOZA</div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+      <div class="cart-icon" id="cartIcon">🛒<span id="cartCount" style="color: red; margin-left: 5px;">0</span></div>
+    </nav>
+    <div class="hero-content">
+      <div class="text">
+        <h1>Delicious Food Is <br> Waiting For You</h1>
+        <p>Our team of registered nurses and skilled healthcare professionals provide in-home nursing</p>
+        <div class="hero-buttons">
+          <a href="#menu" class="btn">Plenty of product</a>
+          <a href="#book" class="btn light">Make an order</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="images/burger.png" alt="Food Bowl" />
+      </div>
+    </div>
+  </header>
+
+  </section>
+  <section id="menu" class="top-list">
+    <h2>Anything you like?</h2>
+    <p class="subheading">Search around, take your time</p>
+    <div class="menu-grid">
+      <!-- Start of clickable "Noodles three" -->
+      <a href="product1.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <!-- End of clickable "Noodles three" -->
+
+      <a href="product2.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <a href="product3.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <a href="product4.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <a href="product5.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <a href="product6.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">₹300</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <a href="product7.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <a href="product8.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <a href="product9.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+      <a href="product10.html" class="menu-item" style="text-decoration: none;">
+        <img src="images/burger.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Noodles three</h3>
+        <p>White plate with dried shrimps</p>
+        <span class="price">12$</span>
+        <span class="rating">⭐ 8.1</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="highlight">
+    <div class="highlight-content">
+      <img src="images/burger.png" alt="French Fries">
+      <div class="highlight-text">
+        <h2>Best Potatoes For French Fries</h2>
+        <p>Russet potatoes are ideal. Since they're dense, they don’t contain as much water inside, which allows them to get extra crispy.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <h2>Our services</h2>
+    <div class="service-icons">
+      <div>🛒 Shipping to other state</div>
+      <div>👥 Membership</div>
+      <div>🚚 Delivery service</div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 YOZA Web3. All rights reserved.</p>
+  </footer>
+
+  <!-- Cart Panel -->
+  <div id="cartPanel">
+    <h3>Shopping Cart</h3>
+    <div id="cartItems"></div>
+    <div style="margin-top: 1rem; border-top: 1px solid #ccc; padding-top: 1rem;">
+      <strong>Subtotal: ₹<span id="cartTotal">0</span></strong>
+      <a href="checkout.html" style="display: inline-block; text-align: center; margin-top: 1rem; width: 100%; padding: 10px; background: #000; color: white; border: none; border-radius: 5px; text-decoration: none;">Checkout</a>
+    </div>
+  </div>
+
+  <script>
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItems = document.getElementById('cartItems');
+      const cartCount = document.getElementById('cartCount');
+      const cartTotal = document.getElementById('cartTotal');
+      let totalQty = 0;
+      let total = 0;
+
+      cartItems.innerHTML = '';
+
+      cart.forEach((item, index) => {
+        totalQty += item.qty;
+        total += item.qty * item.price;
+
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}" />
+            <div class="cart-item-info">
+              <strong>${item.name}</strong><br>
+              Qty: ${item.qty} <span class="remove-btn" onclick="removeItem(${index})">Remove</span>
+            </div>
+            <div>₹${(item.price * item.qty).toFixed(2)}</div>
+          </div>
+        `;
+      });
+
+      cartCount.textContent = totalQty;
+      cartTotal.textContent = total.toFixed(2);
+    }
+
+    function removeItem(index) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      setTimeout(() => loadCart(), 100); // Let DOM update without hiding the cart
+    }
+
+    document.getElementById("cartIcon").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const panel = document.getElementById("cartPanel");
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+      loadCart();
+    });
+
+    document.addEventListener("click", (e) => {
+      const panel = document.getElementById("cartPanel");
+      const icon = document.getElementById("cartIcon");
+      if (!panel.contains(e.target) && !icon.contains(e.target)) {
+        panel.style.display = 'none';
+      }
+    });
+
+    loadCart();
+  </script>
+</body>
+</html>

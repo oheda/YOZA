@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOZA STORE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Redirect if user not registered
+    window.addEventListener("DOMContentLoaded", () => {
+      const isRegistered = localStorage.getItem("isRegistered");
+      if (!isRegistered) {
+        window.location.href = "register.html";
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="logo">YOZA</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="shop.html" class="order-btn">Order Now</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Everything you like,<br>Just for You!</h1>
+      <p>Discover our shop! Why not order something today?</p>
+      <a href="shop.html" class="hero-btn">Order Now</a>
+    </div>
+    <div class="hero-images">
+      <img src="images/croissant1.png" alt="Croissant">
+      <img src="images/croissant2.png" alt="Croissant">
+      <img src="images/pastry1.png" alt="Pastry">
+    </div>
+  </section>
+
+  <section class="why-choose-us">
+    <h2>Choose what you like</h2>
+    <div class="features">
+      <div class="feature">
+        <img src="images/artisan-bread.jpg" alt="Artisan Bread">
+        <h3>Artisan Breads</h3>
+        <p>Made traditionally with the finest organic ingredients.</p>
+        <a href="#" class="btn">Visit Bakery</a>
+      </div>
+      <div class="feature">
+        <img src="images/sweet-pastries.jpg" alt="Sweet Pastries">
+        <h3>Sweet Pastries</h3>
+        <p>Delightful and soft pastries perfect for every mood.</p>
+        <a href="#" class="btn">Yum Pastry</a>
+      </div>
+      <div class="feature">
+        <img src="images/custom-cakes.jpg" alt="Custom Cakes">
+        <h3>Custom Cakes</h3>
+        <p>Handcrafted cakes tailored for every occasion.</p>
+        <a href="#" class="btn">Visit Bakery</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit-us">
+    <div class="visit-text">
+      <h2>Visit Us Today</h2>
+      <p>Experience the aroma and warmth of our bakery in person. We're always excited to welcome new faces and familiar friends!</p>
+      <a href="#" class="btn">Visit Us Today</a>
+    </div>
+    <div class="visit-images">
+      <img src="images/donut.jpg" alt="Donut">
+      <img src="images/pastries.jpg" alt="Pastries">
+      <img src="images/cake-powdered.jpg" alt="Powdered Cake">
+    </div>
+  </section>
+
+  <section class="gallery">
+    <div class="gallery-images">
+      <img src="images/muffins.jpg" alt="Muffins">
+      <img src="images/mini-cakes.jpg" alt="Mini Cakes">
+      <img src="images/cream-cake.jpg" alt="Cream Cake">
+    </div>
+    <div class="gallery-description">
+      <div>
+        <h3>Organic Baking</h3>
+        <p>We believe in quality and sustainability — no additives, no shortcuts.</p>
+      </div>
+      <div>
+        <h3>Natural Eating</h3>
+        <p>Delicious treats that make you feel as good as they taste.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Organic & Vegan Bakery. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
