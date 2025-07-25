@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #fefaf6; /* Soft light beige background */
+  background-color: #fefaf6;
   color: #4e342e;
   min-height: 100vh;
 }
@@ -16,6 +16,7 @@ body {
   align-items: center;
   backdrop-filter: blur(6px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -25,12 +26,19 @@ body {
   color: #6d4c41;
 }
 
+/* Menu */
+.menu {
+  display: flex;
+  align-items: center;
+}
+
 .menu ul {
   list-style: none;
   display: flex;
   gap: 25px;
   margin: 0;
   padding: 0;
+  flex-wrap: wrap;
 }
 
 .menu ul li a {
@@ -137,19 +145,59 @@ footer {
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-  .about-container {
-    margin: 20px;
-    padding: 20px;
-  }
-
+@media (max-width: 768px) {
   .navbar {
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
 
-  .menu ul {
+  .nav-links {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .hero {
     flex-direction: column;
-    gap: 10px;
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .hero-text {
+    padding-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .hero-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-images {
+    justify-content: center;
+  }
+
+  .why-choose-us {
+    padding: 40px 10px;
+  }
+
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .visit-us {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .visit-text {
+    padding-right: 0;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .gallery-images,
+  .gallery-description {
+    flex-direction: column;
+    align-items: center;
   }
 }
