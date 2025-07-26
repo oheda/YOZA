@@ -7,6 +7,18 @@ body {
   color: #4e342e;
 }
 
+/* Global wrapper for centering */
+.main-wrapper {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 /* Navbar styles */
 .navbar {
   display: flex;
@@ -299,10 +311,6 @@ footer {
 }
 
 @media (max-width: 414px) {
-  .main-wrapper {
-    padding: 0 12px;
-  }
-
   .navbar {
     flex-wrap: nowrap;
     overflow-x: auto;
