@@ -7,12 +7,6 @@ body {
   color: #4e342e;
 }
 
-.main-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
 /* Navbar styles */
 .navbar {
   display: flex;
