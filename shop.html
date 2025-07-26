@@ -46,6 +46,19 @@
       cursor: pointer;
       font-size: 0.8rem;
     }
+    .search-bar {
+      margin: 1rem auto;
+      max-width: 400px;
+      display: flex;
+      justify-content: center;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #d97629;
+      border-radius: 25px;
+      font-family: 'Poppins', sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -54,7 +67,6 @@
       <div class="logo">YOZA</div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-
         <li><a href="#menu">Menu</a></li>
         <li><a href="about.html">About</a></li>
       </ul>
@@ -75,26 +87,28 @@
     </div>
   </header>
 
-  </section>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search for food...">
+  </div>
+
   <section id="menu" class="top-list">
     <h2>Anything you like?</h2>
     <p class="subheading">Search around, take your time</p>
-    <div class="menu-grid">
-      <!-- Start of clickable "Noodles three" -->
+    <div class="menu-grid" id="menuGrid">
       <a href="product1.html" class="menu-item" style="text-decoration: none;">
-        <img src="images/burger.png" alt="Noodles Three">
-        <h3 style="color: #d97629;">Noodles three</h3>
-        <p>White plate with dried shrimps</p>
-        <span class="price">12$</span>
+        <img src="images/Buldak.png" alt="Noodles Three">
+        <h3 style="color: #d97629;">Buldak Noodles</h3>
+        <p>Best with egg topping</p>
+        <span class="price">₹70</span>
         <span class="rating">⭐ 8.1</span>
       </a>
       <!-- End of clickable "Noodles three" -->
 
       <a href="product2.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
-        <h3 style="color: #d97629;">Noodles three</h3>
+        <h3 style="color: #d97629;">Buldak Noodles</h3>
         <p>White plate with dried shrimps</p>
-        <span class="price">12$</span>
+        <span class="price">₹70</span>
         <span class="rating">⭐ 8.1</span>
       </a>
       <a href="product3.html" class="menu-item" style="text-decoration: none;">
@@ -176,10 +190,9 @@
   </section>
 
   <footer>
-    <p>© 2025 YOZA Web3. All rights reserved.</p>
+    <p>©2025 YOZA's Store. All rights reserved.</p>
   </footer>
 
-  <!-- Cart Panel -->
   <div id="cartPanel">
     <h3>Shopping Cart</h3>
     <div id="cartItems"></div>
@@ -224,7 +237,7 @@
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       cart.splice(index, 1);
       localStorage.setItem('cart', JSON.stringify(cart));
-      setTimeout(() => loadCart(), 100); // Let DOM update without hiding the cart
+      setTimeout(() => loadCart(), 100);
     }
 
     document.getElementById("cartIcon").addEventListener("click", (e) => {
@@ -240,6 +253,16 @@
       if (!panel.contains(e.target) && !icon.contains(e.target)) {
         panel.style.display = 'none';
       }
+    });
+
+    // Search filter function
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const items = document.querySelectorAll(".menu-grid a");
+      items.forEach(item => {
+        const name = item.querySelector("h3").textContent.toLowerCase();
+        item.style.display = name.includes(query) ? "block" : "none";
+      });
     });
 
     loadCart();
