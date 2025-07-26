@@ -7,6 +7,12 @@ body {
   color: #4e342e;
 }
 
+.main-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 /* Navbar styles */
 .navbar {
   display: flex;
@@ -295,5 +301,105 @@ footer {
   .gallery-description {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 414px) {
+  .main-wrapper {
+    padding: 0 12px;
+  }
+
+  .navbar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
+  .navbar .logo {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+  }
+
+  .nav-links {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .order-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+  }
+
+  .hero {
+    padding: 30px 16px;
+    margin-top: 80px;
+    flex-direction: column;
+  }
+
+  .hero-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .hero-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .hero-images img {
+    width: 90px;
+    margin: 8px;
+  }
+
+  .why-choose-us {
+    padding: 30px 10px;
+  }
+
+  .why-choose-us h2 {
+    font-size: 1.6rem;
+  }
+
+  .feature {
+    max-width: 90%;
+  }
+
+  .feature h3 {
+    font-size: 1.1rem;
+  }
+
+  .visit-us {
+    padding: 30px 16px;
+    flex-direction: column;
+  }
+
+  .visit-text h2 {
+    font-size: 1.4rem;
+  }
+
+  .visit-images img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .gallery {
+    padding: 30px 10px;
+  }
+
+  .gallery-images img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .gallery-description div {
+    max-width: 100%;
+  }
+
+  footer {
+    font-size: 0.8rem;
+    padding: 15px;
   }
 }
