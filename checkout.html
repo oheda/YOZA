@@ -5,160 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    body {
-      background-color: #fefaf6;
-      padding: 40px;
-      color: #4e342e;
-    }
-
-    .container {
-      display: flex;
-      gap: 40px;
-      max-width: 1200px;
-      margin: auto;
-      background: #fff3e6;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.05);
-    }
-
-    .left-section {
-      flex: 2;
-    }
-
-    .right-section {
-      flex: 1;
-      background: #fff8f0;
-      padding: 30px;
-      border-radius: 16px;
-    }
-
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-      color: #5d4037;
-    }
-
-    .section-title {
-      margin: 30px 0 10px;
-      font-weight: 600;
-    }
-
-    input, select {
-      padding: 12px;
-      margin: 10px 0;
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      background: #fff;
-      color: #4e342e;
-    }
-
-    .input-group {
-      display: flex;
-      gap: 20px;
-    }
-
-    .input-group > div {
-      flex: 1;
-    }
-
-    .delivery-methods,
-    .payment-methods {
-      display: flex;
-      gap: 15px;
-      margin: 10px 0;
-    }
-
-    .delivery-methods button,
-    .payment-methods button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #e0dcd5;
-      cursor: pointer;
-      font-weight: 500;
-      color: #4e342e;
-    }
-
-    .delivery-methods button.active,
-    .payment-methods button.active {
-      background: #8d6e63;
-      color: white;
-    }
-
-    .right-section h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #5d4037;
-    }
-
-    .summary {
-      margin-top: 20px;
-    }
-
-    .summary-item {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-    }
-
-    .total {
-      font-size: 22px;
-      font-weight: bold;
-      margin-top: 20px;
-      color: #4e342e;
-    }
-
-    .pay-btn {
-      margin-top: 30px;
-      padding: 14px;
-      background: #6d4c41;
-      color: white;
-      text-align: center;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .cart-items {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .cart-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
-    }
-
-    .cart-item img {
-      width: 50px;
-      border-radius: 6px;
-    }
-
-    .cart-item-info {
-      flex: 1;
-      margin-left: 10px;
-    }
-
-    @media (max-width: 900px) {
-      .container {
-        flex-direction: column;
-        padding: 20px;
-      }
-    }
+    /* [unchanged styles - same as your current one] */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background-color: #fefaf6; padding: 40px; color: #4e342e; }
+    .container { display: flex; gap: 40px; max-width: 1200px; margin: auto; background: #fff3e6; padding: 40px; border-radius: 16px; box-shadow: 0 0 30px rgba(0,0,0,0.05); }
+    .left-section { flex: 2; }
+    .right-section { flex: 1; background: #fff8f0; padding: 30px; border-radius: 16px; }
+    h1 { font-size: 32px; margin-bottom: 10px; color: #5d4037; }
+    .section-title { margin: 30px 0 10px; font-weight: 600; }
+    input, select { padding: 12px; margin: 10px 0; width: 100%; border-radius: 8px; border: 1px solid #ccc; background: #fff; color: #4e342e; }
+    .input-group { display: flex; gap: 20px; }
+    .input-group > div { flex: 1; }
+    .delivery-methods, .payment-methods { display: flex; gap: 15px; margin: 10px 0; }
+    .delivery-methods button, .payment-methods button { padding: 12px 20px; border: none; border-radius: 8px; background: #e0dcd5; cursor: pointer; font-weight: 500; color: #4e342e; }
+    .delivery-methods button.active, .payment-methods button.active { background: #8d6e63; color: white; }
+    .right-section h3 { font-size: 20px; margin-bottom: 10px; color: #5d4037; }
+    .summary { margin-top: 20px; }
+    .summary-item { display: flex; justify-content: space-between; margin: 10px 0; }
+    .total { font-size: 22px; font-weight: bold; margin-top: 20px; color: #4e342e; }
+    .pay-btn { margin-top: 30px; padding: 14px; background: #6d4c41; color: white; text-align: center; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; }
+    .cart-items { max-height: 300px; overflow-y: auto; }
+    .cart-item { display: flex; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    .cart-item img { width: 50px; border-radius: 6px; }
+    .cart-item-info { flex: 1; margin-left: 10px; }
+    @media (max-width: 900px) { .container { flex-direction: column; padding: 20px; } }
   </style>
 </head>
 <body>
@@ -170,12 +42,12 @@
 
       <div class="section-title">1. Contact information</div>
       <div class="input-group">
-        <div><input type="text" placeholder="First Name" value="" /></div>
-        <div><input type="text" placeholder="Last Name" value="" /></div>
+        <div><input type="text" placeholder="First Name" id="firstName" /></div>
+        <div><input type="text" placeholder="Last Name" id="lastName" /></div>
       </div>
       <div class="input-group">
-        <div><input type="text" placeholder="Phone Number" value="" /></div>
-        <div><input type="email" placeholder="Email" value="" /></div>
+        <div><input type="text" placeholder="Phone Number" id="phone" /></div>
+        <div><input type="email" placeholder="Email" id="email" /></div>
       </div>
 
       <div class="section-title">2. Delivery method</div>
@@ -208,10 +80,11 @@
   </div>
 
   <script>
+    emailjs.init("cm8j8YV-GgZ-3x0_o"); // replace with your public EmailJS key
+
     function generateOrderID() {
       let existingID = localStorage.getItem('orderID');
       if (existingID) return existingID;
-
       const newID = 'ORD' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
       localStorage.setItem('orderID', newID);
       return newID;
@@ -229,7 +102,6 @@
       cart.forEach(item => {
         const itemTotal = item.qty * item.price;
         subtotal += itemTotal;
-
         const itemHTML = `
           <div class="cart-item">
             <img src="${item.image}" alt="${item.name}" />
@@ -266,39 +138,44 @@
       });
     });
 
-document.querySelector('.pay-btn').addEventListener('click', () => {
-  const firstName = document.querySelector('input[placeholder="First Name"]').value.trim();
-  const lastName = document.querySelector('input[placeholder="Last Name"]').value.trim();
-  const email = document.querySelector('input[placeholder="Email"]').value.trim();
-  const phone = document.querySelector('input[placeholder="Phone Number"]').value.trim();
-  const orderID = document.getElementById('orderId').value;
-  const deliveryBtn = document.querySelector('.delivery-methods .active');
-  const paymentBtn = document.querySelector('.payment-methods .active');
+    document.querySelector('.pay-btn').addEventListener('click', () => {
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const orderID = document.getElementById("orderId").value;
+      const delivery = document.querySelector('.delivery-methods .active')?.innerText;
+      const payment = document.querySelector('.payment-methods .active')?.innerText;
+      const total = document.getElementById("totalAmount").innerText;
 
-  if (!firstName || !lastName || !email || !phone) {
-    alert("⚠️ Please fill in all contact information.");
-    return;
-  }
+      if (!firstName || !lastName || !email || !phone || !delivery || !payment) {
+        alert("⚠️ Please fill in all required fields.");
+        return;
+      }
 
-  if (!deliveryBtn) {
-    alert("⚠️ Please select a delivery method.");
-    return;
-  }
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartDetails = cart.map(item => `${item.name} x${item.qty} - ₹${item.price}`).join('\n');
 
-  if (!paymentBtn) {
-    alert("⚠️ Please select a payment method.");
-    return;
-  }
-
-  const delivery = deliveryBtn.innerText;
-  const payment = paymentBtn.innerText;
-  const total = document.getElementById('totalAmount').innerText;
-
-  alert(`✅ Payment Successful!\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\nOrder ID: ${orderID}\nDelivery Method: ${delivery}\nPayment Method: ${payment}\nTotal Amount: ₹${total}`);
-
-  localStorage.removeItem('orderID');
-});
-
+      emailjs.send("service_3tow59f", "template_x8f24jn", {
+        firstName,
+        lastName,
+        email,
+        phone,
+        orderID,
+        delivery,
+        payment,
+        total,
+        cartDetails
+      }).then(() => {
+        alert(`✅ Payment Successful!\n\nOrder sent to your email.`);
+        localStorage.removeItem('cart');
+        localStorage.removeItem('orderID');
+        window.location.href = "index.html"; // or thank you page
+      }).catch(err => {
+        console.error("Email send error:", err);
+        alert("❌ Failed to send order. Please try again.");
+      });
+    });
   </script>
 </body>
 </html>
