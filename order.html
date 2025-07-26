@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Orders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #fefaf6;
+      padding: 20px;
+      color: #4e342e;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      border-radius: 16px;
+      overflow-x: auto;
+      background: #fff3e6;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #5d4037;
+      font-size: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #8d6e63;
+      color: white;
+      font-size: 14px;
+    }
+
+    td {
+      font-size: 14px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fff8f0;
+    }
+
+    .empty {
+      text-align: center;
+      margin-top: 30px;
+      color: #888;
+    }
+
+    .btn-clear, .btn-home {
+      margin: 20px auto;
+      display: block;
+      padding: 10px 20px;
+      background: #6d4c41;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      width: fit-content;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 20px;
+      }
+      th, td {
+        font-size: 13px;
+        padding: 8px;
+      }
+      .btn-clear, .btn-home {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 18px;
+      }
+      .container {
+        padding: 10px;
+      }
+      th, td {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Customer Orders</h1>
+    <a href="index.html" class="btn-home">Home</a>
+    <div id="ordersContainer"></div>
+    <button class="btn-clear" onclick="clearOrders()">Clear All Orders</button>
+  </div>
+
+  <script>
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem('orders')) || [];
+      const container = document.getElementById('ordersContainer');
+
+      if (orders.length === 0) {
+        container.innerHTML = '<p class="empty">No orders found.</p>';
+        return;
+      }
+
+      let tableHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Delivery</th>
+              <th>Payment</th>
+              <th>Total</th>
+              <th>Cart Items</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      orders.forEach(order => {
+        const itemsList = order.cart.map(item => `${item.name} x${item.qty}`).join('<br>');
+        tableHTML += `
+          <tr>
+            <td>${order.orderID}</td>
+            <td>${order.name}</td>
+            <td>${order.email}</td>
+            <td>${order.phone}</td>
+            <td>${order.address || ''}</td>
+            <td>${order.delivery}</td>
+            <td>${order.payment}</td>
+            <td>₹${order.total}</td>
+            <td>${itemsList}</td>
+          </tr>
+        `;
+      });
+
+      tableHTML += '</tbody></table>';
+      container.innerHTML = tableHTML;
+    }
+
+    function clearOrders() {
+      if (confirm("Are you sure you want to delete all orders?")) {
+        localStorage.removeItem("orders");
+        loadOrders();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadOrders);
+  </script>
+</body>
+</html>
