@@ -6,14 +6,6 @@
   <title>Drop Type Cushion Chair</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Drop Type Cushion Chair</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
-  <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
@@ -267,8 +259,12 @@
       }
 
       .nav-menu {
-        flex-direction: column;
-        gap: 1rem;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+      }
+
+      .nav-menu li {
+        margin-right: 10px;
       }
 
       .buttons {
@@ -286,48 +282,17 @@
         gap: 0.5rem;
       }
     }
-    <style>
-  /* ADD THIS TO EXISTING STYLE BLOCK NEAR THE BOTTOM */
-  @media (max-width: 768px) {
-    /* Existing rules preserved */
-    .nav-bar {
-      flex-direction: column;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-
-    /* 👇 Override for nav-menu to keep buttons horizontal */
-    .nav-menu {
-      flex-direction: row !important;
-      flex-wrap: wrap;
-    }
-
-    .nav-menu li {
-      margin-right: 10px;
-    }
-
-    .buttons {
-      flex-direction: column;
-    }
-  }
-</style>
-
-  </style>
-</head>
-<body>
-<!-- HTML body continues as-is -->
-
   </style>
 </head>
 <body>
   <div class="container">
     <div class="left">
-      <img src="images/burger.png" alt="Chair" class="main">
+      <img src="images/Buldak.png" alt="Chair" class="main">
       <p>Rotate</p>
       <div class="thumbnails">
-        <img src="images/burger.png" alt="Thumb1">
-        <img src="images/burger.png" alt="Thumb2">
-        <img src="images/burger.png" alt="Thumb3">
+        <img src="images/Buldak.png" alt="Thumb1">
+        <img src="images/Buldak.png" alt="Thumb2">
+        <img src="images/Buldak.png" alt="Thumb3">
       </div>
     </div>
     <div class="right">
@@ -340,15 +305,15 @@
         <div class="nav-cart" id="cartIcon">🛒<span id="cartCount" style="font-size: 0.8rem; color: red; margin-left: 5px;">0</span></div>
       </nav>
 
-      <p style="color: #a1887f; font-size: 0.9rem;">PREMIUM BURGERS</p>
-      <h2>Drop type cushion chair</h2>
+      <p style="color: #a1887f; font-size: 0.9rem;">Buldak</p>
+      <h2>Buldak Noodles Best with egg topping</h2>
       <div class="rating">It's a top rating lunch</div>
       <div class="color-options">
         <span class="color1"></span>
         <span class="color2"></span>
       </div>
-      <p class="desc">Premium edition of burger with all the ingredients</p>
-      <div class="price">₹300</div>
+      <p class="desc">Buldak</p>
+      <div class="price">₹70</div>
       <div class="quantity">
         <button onclick="changeQuantity(-1)">-</button>
         <span id="qty">1</span>
@@ -367,7 +332,7 @@
     <div id="cartItems"></div>
     <div style="margin-top: 1rem; border-top: 1px solid #ccc; padding-top: 1rem;">
       <div style="font-weight: bold;">Subtotal: ₹<span id="cartTotal">0.00</span></div>
-      <button style="margin-top: 1rem; width: 100%; padding: 10px; background: #6d4c41; color: #fff; border: none; border-radius: 10px;">Checkout</button>
+      <button onclick="location.href='checkout.html'" style="margin-top: 1rem; width: 100%; padding: 10px; background: #6d4c41; color: #fff; border: none; border-radius: 10px;">Checkout</button>
     </div>
   </div>
 
@@ -383,10 +348,10 @@
     function addToCart() {
       const qty = parseInt(document.getElementById('qty').textContent);
       const product = {
-        name: "Drop type cushion chair",
-        price: 300,
+        name: "Buldak",
+        price: 70,
         qty: qty,
-        image: "images/burger.png"
+        image: "images/Buldak.png"
       };
 
       let cart = getCart();
@@ -402,8 +367,8 @@
     }
 
     function buyNow() {
-      addToCart(); // Adds item to cart
-      window.location.href = "checkout.html"; // Redirects to checkout
+      addToCart();
+      window.location.href = "checkout.html";
     }
 
     function changeQuantity(change) {
@@ -467,7 +432,6 @@
       }
     });
 
-    // Load cart on page load
     updateCartUI();
   </script>
 </body>
