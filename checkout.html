@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    /* [unchanged styles - same as your current one] */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body { background-color: #fefaf6; padding: 40px; color: #4e342e; }
     .container { display: flex; gap: 40px; max-width: 1200px; margin: auto; background: #fff3e6; padding: 40px; border-radius: 16px; box-shadow: 0 0 30px rgba(0,0,0,0.05); }
@@ -35,10 +34,9 @@
 </head>
 <body>
   <div class="container">
-    <!-- Left Section -->
     <div class="left-section">
       <h1>Checkout</h1>
-      <p>a checkout is a counter where you pay for things you are buying</p>
+      <p>A checkout is a counter where you pay for things you are buying.</p>
 
       <div class="section-title">1. Contact information</div>
       <div class="input-group">
@@ -64,14 +62,13 @@
       </div>
     </div>
 
-    <!-- Right Section -->
     <div class="right-section">
       <h3>Your Cart</h3>
       <div class="cart-items" id="cartItems"></div>
 
       <div class="summary">
         <div class="summary-item"><span>Subtotal</span><span>₹<span id="cartTotal">0</span></span></div>
-        <div class="summary-item"><span>Delivery</span><span>₹30</span></div>
+        <div class="summary-item"><span>Delivery</span><span>₹<span id="deliveryFee">30</span></span></div>
         <div class="total">Total: ₹<span id="totalAmount">30</span></div>
       </div>
 
@@ -80,7 +77,7 @@
   </div>
 
   <script>
-    emailjs.init("cm8j8YV-GgZ-3x0_o"); // replace with your public EmailJS key
+    emailjs.init("cm8j8YV-GgZ-3x0_o");
 
     function generateOrderID() {
       let existingID = localStorage.getItem('orderID');
@@ -90,18 +87,24 @@
       return newID;
     }
 
+    function updateTotal() {
+      const deliveryType = document.querySelector('.delivery-methods .active')?.innerText;
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const subtotal = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
+      const deliveryFee = deliveryType === "Delivery" ? 30 : 0;
+
+      document.getElementById("cartTotal").textContent = subtotal.toFixed(2);
+      document.getElementById("deliveryFee").textContent = deliveryFee.toFixed(2);
+      document.getElementById("totalAmount").textContent = (subtotal + deliveryFee).toFixed(2);
+    }
+
     function loadCart() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const cartItemsContainer = document.getElementById('cartItems');
-      const cartTotalEl = document.getElementById('cartTotal');
-      const totalAmountEl = document.getElementById('totalAmount');
-
-      let subtotal = 0;
       cartItemsContainer.innerHTML = '';
 
       cart.forEach(item => {
         const itemTotal = item.qty * item.price;
-        subtotal += itemTotal;
         const itemHTML = `
           <div class="cart-item">
             <img src="${item.image}" alt="${item.name}" />
@@ -115,8 +118,7 @@
         cartItemsContainer.innerHTML += itemHTML;
       });
 
-      cartTotalEl.textContent = subtotal.toFixed(2);
-      totalAmountEl.textContent = (subtotal + 30).toFixed(2);
+      updateTotal();
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -128,6 +130,7 @@
       btn.addEventListener('click', () => {
         document.querySelectorAll('.delivery-methods button').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        updateTotal();
       });
     });
 
@@ -138,7 +141,7 @@
       });
     });
 
-    document.querySelector('.pay-btn').addEventListener('click', () => {
+    document.querySelector('.pay-btn').addEventListener('click', async () => {
       const firstName = document.getElementById("firstName").value.trim();
       const lastName = document.getElementById("lastName").value.trim();
       const email = document.getElementById("email").value.trim();
@@ -156,6 +159,35 @@
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const cartDetails = cart.map(item => `${item.name} x${item.qty} - ₹${item.price}`).join('\n');
 
+      if (payment !== "COD") {
+        try {
+          const res = await fetch("http://localhost:5000/create-qr-code", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: firstName + " " + lastName,
+              email,
+              phone,
+              orderID,
+              total,
+              cartDetails
+            })
+          });
+
+          const data = await res.json();
+          if (data && data.qr_image_url) {
+            window.open(data.qr_image_url, "_blank");
+          } else {
+            alert("❌ QR code generation failed.");
+            return;
+          }
+        } catch (err) {
+          console.error("Payment Error:", err);
+          alert("❌ Could not create QR.");
+          return;
+        }
+      }
+
       emailjs.send("service_3tow59f", "template_x8f24jn", {
         firstName,
         lastName,
@@ -167,13 +199,13 @@
         total,
         cartDetails
       }).then(() => {
-        alert(`✅ Payment Successful!\n\nOrder sent to your email.`);
+        alert(`✅ Order sent to your email.`);
         localStorage.removeItem('cart');
         localStorage.removeItem('orderID');
-        window.location.href = "index.html"; // or thank you page
+        window.location.href = "index.html";
       }).catch(err => {
         console.error("Email send error:", err);
-        alert("❌ Failed to send order. Please try again.");
+        alert("❌ Failed to send order.");
       });
     });
   </script>
