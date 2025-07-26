@@ -113,11 +113,14 @@
   </style>
 </head>
 <body>
+  <div class="button-group">
+    <a href="index.html" class="btn-home">Home</a>
+    <button class="btn-clear" onclick="clearOrders()">Clear All Orders</button>
+  </div>
+
   <div class="container">
     <h1>Customer Orders</h1>
-    <a href="index.html" class="btn-home">Home</a>
     <div id="ordersContainer"></div>
-    <button class="btn-clear" onclick="clearOrders()">Clear All Orders</button>
   </div>
 
   <script>
