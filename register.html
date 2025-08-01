@@ -81,20 +81,7 @@
       flex-direction: column;
       gap: 10px;
       margin-top: 1.5rem;
-    }
-
-    .oauth-buttons button {
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 25px;
-      padding: 10px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
     }
 
     .footer {
@@ -102,6 +89,21 @@
       font-size: 0.8rem;
       color: #3e2723;
       margin-top: 2rem;
+    }
+
+    #user-info {
+      text-align: center;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    #user-info img {
+      width: 60px;
+      border-radius: 50%;
+    }
+
+    #user-info p {
+      margin: 0.5rem 0 0;
     }
   </style>
 </head>
@@ -120,38 +122,36 @@
     </form>
 
     <div class="oauth-buttons">
-      <button onclick="handleGoogleLogin()">
-        <img src="https://img.icons8.com/color/24/000000/google-logo.png"/> Sign up with Google
-      </button>
-      <button onclick="handleFacebookLogin()">
+      <!-- Google Sign In button -->
+      <div id="g_id_onload"
+           data-client_id="804796209767-5e68na3142l6nhmuts76f7jrvo4bc1u6.apps.googleusercontent.com"
+           data-callback="handleCredentialResponse"
+           data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-size="large"
+           data-theme="outline"
+           data-text="sign_in_with"
+           data-shape="rectangular"
+           data-logo_alignment="left">
+      </div>
+
+      <!-- Placeholder Facebook button -->
+      <button onclick="alert('Facebook login not configured')">
         <img src="https://img.icons8.com/fluency/24/facebook-new.png"/> Sign up with Facebook
       </button>
+    </div>
+
+    <div id="user-info">
+      <img id="user-pic" src="" alt="User Picture"/>
+      <p id="user-name"></p>
     </div>
   </div>
 
   <div class="footer">© 2025 YOZA Shop. All rights reserved.</div>
 
-  <script>
-    function handleRegister(event) {
-      event.preventDefault();
-      const form = event.target;
-      const password = form.password.value;
-      const confirm = form.confirm.value;
-
-      if (password !== confirm) {
-        alert("Passwords do not match!");
-        return false;
-      }
-
-      alert("Registration successful! Redirecting...");
-      window.location.href = "index.html";
-      return false;
-    }
-
-    function handleGoogleLogin() {
-      alert("Google OAuth not fully configured yet. Connect backend to enable.");
-    }
-
-  </script>
+  <!-- Link external JavaScript file -->
+  <script src="register.js"></script>
 </body>
 </html>

@@ -46,20 +46,20 @@
       <div class="input-group">
         <div><input type="text" placeholder="Phone Number" id="phone" /></div>
         <div><input type="email" placeholder="Email" id="email" /></div>
-        <div><input type="text" placeholder="address" id="address" /></div>
+        <div><input type="text" placeholder="Address" id="address" /></div>
       </div>
 
       <div class="section-title">2. Delivery method</div>
       <div class="delivery-methods">
         <button class="active">Delivery</button>
-        <button>Self pick up</button>
+        <button style="display:none;">Self pick up</button>
       </div>
       <input type="text" id="orderId" placeholder="Order ID" readonly />
 
       <div class="section-title">3. Payment method</div>
       <div class="payment-methods">
-        <button>G Pay</button>
-        <button>COD</button>
+        <button class="active">COD</button>
+        <button style="display:none;">Online Pay</button>
       </div>
     </div>
 
@@ -73,7 +73,7 @@
         <div class="total">Total: ₹<span id="totalAmount">30</span></div>
       </div>
 
-      <button class="pay-btn">Checkout</button>
+      <button class="pay-btn">Place order</button>
     </div>
   </div>
 
@@ -142,90 +142,61 @@
       });
     });
 
-     document.querySelector('.pay-btn').addEventListener('click', async () => {
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const orderID = document.getElementById("orderId").value;
-    const delivery = document.querySelector('.delivery-methods .active')?.innerText;
-    const payment = document.querySelector('.payment-methods .active')?.innerText;
-    const address = document.getElementById("address").value.trim();
-    const total = document.getElementById("totalAmount").innerText;
+    document.querySelector('.pay-btn').addEventListener('click', () => {
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const orderID = document.getElementById("orderId").value;
+      const delivery = document.querySelector('.delivery-methods .active')?.innerText;
+      const payment = document.querySelector('.payment-methods .active')?.innerText;
+      const address = document.getElementById("address").value.trim();
+      const total = parseFloat(document.getElementById("totalAmount").innerText);
 
-    if (!firstName || !lastName || !email || !phone || !address || !delivery || !payment) {
-      alert("⚠️ Please fill in all required fields.");
-      return;
-    }
-
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartDetails = cart.map(item => `${item.name} x${item.qty} - ₹${item.price}`).join('\n');
-
-    if (payment !== "COD") {
-      try {
-        const res = await fetch("http://localhost:5000/create-qr-code", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: firstName + " " + lastName,
-            email,
-            phone,
-            orderID,
-            total,
-            cartDetails
-          })
-        });
-
-        const data = await res.json();
-        if (data && data.qr_image_url) {
-          window.open(data.qr_image_url, "_blank");
-        } else {
-          alert("❌ QR code generation failed.");
-          return;
-        }
-      } catch (err) {
-        console.error("Payment Error:", err);
-        alert("❌ Could not create QR.");
+      if (!firstName || !lastName || !email || !phone || !address || !delivery || !payment) {
+        alert("⚠️ Please fill in all required fields.");
         return;
       }
-    }
 
-    // ✅ Save order to localStorage for orders.html
-    const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    existingOrders.push({
-      name: `${firstName} ${lastName}`,
-      email,
-      phone,
-      orderID,
-      delivery,
-      payment,
-      address,
-      total,
-      cart
-    });
-    localStorage.setItem("orders", JSON.stringify(existingOrders));
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartDetails = cart.map(item => `${item.name} x${item.qty} - ₹${item.price}`).join('\n');
 
-    emailjs.send("service_3tow59f", "template_x8f24jn", {
-      firstName,
-      lastName,
-      email,
-      phone,
-      orderID,
-      delivery,
-      payment,
-      address,
-      total,
-      cartDetails
-    }).then(() => {
-      alert(`✅ Order sent to your email.`);
-      localStorage.removeItem('cart');
-      localStorage.removeItem('orderID');
-      window.location.href = "order.html";
-    }).catch(err => {
-      console.error("Email send error:", err);
-      alert("❌ Failed to send order.");
+      // Save order to localStorage for orders.html
+      const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+      existingOrders.push({
+        name: `${firstName} ${lastName}`,
+        email,
+        phone,
+        orderID,
+        delivery,
+        payment,
+        address,
+        total,
+        cart
+      });
+      localStorage.setItem("orders", JSON.stringify(existingOrders));
+
+      emailjs.send("service_3tow59f", "template_x8f24jn", {
+        firstName,
+        lastName,
+        email,
+        phone,
+        orderID,
+        delivery,
+        payment,
+        address,
+        total,
+        cartDetails
+      }).then(() => {
+        alert(`✅ Order sent to your email.`);
+        localStorage.removeItem('cart');
+        localStorage.removeItem('orderID');
+        window.location.href = "order.html";
+      }).catch(err => {
+        console.error("Email send error:", err);
+        alert("❌ Failed to send order.");
+      });
     });
-  });
   </script>
 </body>
 </html>

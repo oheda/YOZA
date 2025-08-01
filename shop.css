@@ -68,7 +68,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-  padding-top: 120px; /* avoid overlap with fixed navbar */
+  padding-top: 120px;
   padding: 3rem 2rem;
   display: flex;
   flex-wrap: wrap;
@@ -148,6 +148,7 @@ body {
   margin-bottom: 2rem;
 }
 
+/* Changed: Use CSS Grid for nicer mobile breakdown, but flex on desktop */
 .menu-grid {
   display: flex;
   flex-wrap: wrap;
@@ -297,6 +298,8 @@ footer {
 }
 
 /* Responsive Layout */
+
+/* Tablet / medium screens */
 @media (max-width: 1024px) {
   .hero-content {
     flex-direction: column;
@@ -328,6 +331,7 @@ footer {
   }
 }
 
+/* Mobile screens with grid adjustments */
 @media (max-width: 768px) {
   .navbar {
     flex-wrap: nowrap;
@@ -336,7 +340,6 @@ footer {
 
   .nav-links {
     flex-direction: row;
-    flex-wrap: nowrap;
     gap: 1rem;
     justify-content: center;
     width: auto;
@@ -357,8 +360,25 @@ footer {
     margin-bottom: 10px;
   }
 
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
   .menu-item {
-    width: 90%;
+    width: auto;
+  }
+
+  .menu-item h3 {
+    font-size: 1.1rem;
+  }
+
+  .menu-item p,
+  .menu-item .price,
+  .menu-item .rating {
+    font-size: 0.85rem;
   }
 
   .highlight-text h2 {
@@ -366,6 +386,7 @@ footer {
   }
 }
 
+/* Very small screens */
 @media (max-width: 480px) {
   .hero-content .text h1 {
     font-size: 1.8rem;

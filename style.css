@@ -1,10 +1,15 @@
 /* Global styles */
-body {
+* {
+  box-sizing: border-box;
+}
+
+html, body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
   background-color: #fefaf6;
   color: #4e342e;
+  overflow-x: hidden;
 }
 
 /* Navbar styles */
@@ -32,6 +37,7 @@ body {
   color: #8d6e63;
   white-space: nowrap;
   margin-right: 1.5rem;
+  flex-shrink: 0;
 }
 
 .nav-links {
@@ -41,6 +47,7 @@ body {
   flex-wrap: nowrap;
   margin: 0;
   padding: 0;
+  flex-shrink: 0;
 }
 
 .nav-links li a {
@@ -65,6 +72,7 @@ body {
   font-weight: 600;
   white-space: nowrap;
   margin-left: auto;
+  flex-shrink: 0;
 }
 
 /* Hero section */
@@ -103,11 +111,18 @@ body {
   font-weight: bold;
 }
 
+.hero-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .hero-images img {
   width: 120px;
   margin: 10px;
   border-radius: 12px;
   object-fit: cover;
+  max-width: 100%;
 }
 
 /* Why Choose Us section */
@@ -135,6 +150,7 @@ body {
   padding: 20px;
   border-radius: 15px;
   max-width: 280px;
+  width: 100%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
@@ -196,6 +212,7 @@ body {
   height: 100px;
   border-radius: 12px;
   object-fit: cover;
+  max-width: 100%;
 }
 
 /* Gallery section */
@@ -218,6 +235,7 @@ body {
   height: 140px;
   object-fit: cover;
   border-radius: 10px;
+  max-width: 100%;
 }
 
 .gallery-description {
