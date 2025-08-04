@@ -17,17 +17,14 @@ app.use(cookieParser());
 // Routes
 app.use("/api", authRoutes);
 
-// Database connection and server start
-const PORT = process.env.PORT || 5000;
-
+// MongoDB connection
 mongoose
-  .connect(process.env.MONGO_URI);
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
+    const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
   })
-  .catch((err) => {
-    console.error("MongoDB connection error:", err);
-  });
+  .catch((err) => console.error("MongoDB connection error:", err));
