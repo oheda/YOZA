@@ -151,7 +151,7 @@
 
   <div class="login-box">
     <h2>Login</h2>
-    <form id="loginForm" onsubmit="return handleLogin(event)">
+    <form id="loginForm">
       <input type="email" name="email" id="email" placeholder="Email" required />
       <input type="password" name="password" id="password" placeholder="Password" required />
       <div class="options">
@@ -187,7 +187,7 @@ window.onload = function () {
   }
 };
 
-async function handleLogin(event) {
+document.getElementById("loginForm").addEventListener("submit", async function(event) {
   event.preventDefault();
 
   const email = document.getElementById("email").value.trim();
@@ -210,7 +210,7 @@ async function handleLogin(event) {
 
     if (!res.ok) {
       alert(result.message || "Login failed.");
-      return false;
+      return;
     }
 
     if (rememberMe) {
@@ -223,15 +223,13 @@ async function handleLogin(event) {
     localStorage.setItem("loginTime", new Date().getTime().toString());
 
     alert("✅ Login successful!");
-    window.location.href = "index.html"; // redirect only after successful login
+    window.location.href = "index.html"; // redirect after successful login
 
   } catch (err) {
     console.error("Login error:", err);
     alert("An error occurred. Please try again.");
   }
-
-  return false;
-}
+});
   </script>
 
 </body>
