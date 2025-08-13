@@ -166,65 +166,64 @@
   </div>
 
   <script>
-  // Auto logout after 3 days
-  window.onload = function () {
-    const savedEmail = localStorage.getItem("rememberedEmail");
-    if (savedEmail) {
-      document.getElementById("email").value = savedEmail;
-      document.getElementById("rememberMe").checked = true;
-    }
-
-    const loginTime = localStorage.getItem("loginTime");
-    if (loginTime) {
-      const now = new Date().getTime();
-      const threeDays = 3 * 24 * 60 * 60 * 1000;
-      if (now - loginTime > threeDays) {
-        localStorage.removeItem("loginToken");
-        localStorage.removeItem("loginTime");
-        alert("Session expired. Please login again.");
-        window.location.href = "login.html";
-      }
-    }
-  };
-
-  async function handleLogin(event) {
-    event.preventDefault();
-
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const rememberMe = document.getElementById("rememberMe").checked;
-
-    try {
-      const res = await fetch("https://yoza.onrender.com/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const result = await res.json();
-
-      if (!res.ok) {
-        alert(result.message || "Login failed.");
-        return false;
-      }
-
-      if (rememberMe) {
-        localStorage.setItem("rememberedEmail", email);
-      } else {
-        localStorage.removeItem("rememberedEmail");
-      }
-
-      localStorage.setItem("loginToken", result.token);
-      localStorage.setItem("loginTime", new Date().getTime().toString());
-
-      alert("Login successful!");
-      window.location.href = "index.html";
-    } catch (err) {
-      alert("An error occurred. Please try again.");
-    }
-
-    return false;
+window.onload = function () {
+  const savedEmail = localStorage.getItem("rememberedEmail");
+  if (savedEmail) {
+    document.getElementById("email").value = savedEmail;
+    document.getElementById("rememberMe").checked = true;
   }
+
+  const loginTime = localStorage.getItem("loginTime");
+  if (loginTime) {
+    const now = new Date().getTime();
+    const threeDays = 3 * 24 * 60 * 60 * 1000;
+    if (now - loginTime > threeDays) {
+      localStorage.removeItem("loginToken");
+      localStorage.removeItem("loginTime");
+      alert("Session expired. Please login again.");
+      window.location.href = "login.html";
+    }
+  }
+};
+
+async function handleLogin(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const rememberMe = document.getElementById("rememberMe").checked;
+
+  try {
+    const res = await fetch("https://yoza.onrender.com/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      alert(result.message || "Login failed.");
+      return false;
+    }
+
+    if (rememberMe) {
+      localStorage.setItem("rememberedEmail", email);
+    } else {
+      localStorage.removeItem("rememberedEmail");
+    }
+
+    localStorage.setItem("loginToken", result.token);
+    localStorage.setItem("loginTime", new Date().getTime().toString());
+
+    alert("Login successful!");
+    window.location.href = "index.html";
+  } catch (err) {
+    alert("An error occurred. Please try again.");
+  }
+
+  return false;
+}
 </script>
 
 </body>

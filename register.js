@@ -1,51 +1,36 @@
-async function handleRegister(event) {
-  event.preventDefault();
+const API_BASE = "https://yoza.onrender.com/api";
 
-  // Step 1: Collect form data
-  const name = event.target.name.value.trim();
-  const email = event.target.email.value.trim();
-  const password = event.target.password.value;
-  const confirm = event.target.confirm.value;
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  // Step 2: Basic client-side validation
-  if (!name || !email || !password || !confirm) {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if (!name || !email || !password) {
     alert("Please fill in all fields.");
-    return false;
-  }
-
-  if (password !== confirm) {
-    alert("Passwords do not match!");
-    return false;
-  }
-
-  if (password.length < 6) {
-    alert("Password must be at least 6 characters long.");
-    return false;
+    return;
   }
 
   try {
-    // Step 3: Send data to backend
-    const response = await fetch("https://yoza.onrender.com/api/register", {
+    const res = await fetch(`${API_BASE}/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ name, email, password })
     });
 
-    const result = await response.json();
+    const data = await res.json();
 
-    // Step 4: Handle response
-    if (response.ok) {
-      alert("Registration successful!");
-      window.location.href = "login.html"; // or your login page
-    } else {
-      alert(result.message || "Registration failed.");
+    if (!res.ok) {
+      alert(data.message || "Registration failed");
+      return;
     }
-  } catch (error) {
-    console.error("Error during registration:", error);
-    alert("Something went wrong. Please try again later.");
-  }
 
-  return false;
-}
+    alert("Registration successful! Please login.");
+    window.location.href = "login.html";
+  } catch (err) {
+    console.error("Register error:", err);
+    alert("Something went wrong. Please try again.");
+  }
+});
