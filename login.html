@@ -174,7 +174,8 @@ window.onload = function () {
   }
 
   const loginTime = localStorage.getItem("loginTime");
-  if (loginTime) {
+  const loginToken = localStorage.getItem("loginToken");
+  if (loginTime && loginToken) {
     const now = new Date().getTime();
     const threeDays = 3 * 24 * 60 * 60 * 1000;
     if (now - loginTime > threeDays) {
@@ -189,9 +190,14 @@ window.onload = function () {
 async function handleLogin(event) {
   event.preventDefault();
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
   const rememberMe = document.getElementById("rememberMe").checked;
+
+  if (!email || !password) {
+    alert("Please enter both email and password.");
+    return;
+  }
 
   try {
     const res = await fetch("https://yoza.onrender.com/api/login", {
@@ -216,15 +222,17 @@ async function handleLogin(event) {
     localStorage.setItem("loginToken", result.token);
     localStorage.setItem("loginTime", new Date().getTime().toString());
 
-    alert("Login successful!");
-    window.location.href = "index.html";
+    alert("✅ Login successful!");
+    window.location.href = "index.html"; // redirect only after successful login
+
   } catch (err) {
+    console.error("Login error:", err);
     alert("An error occurred. Please try again.");
   }
 
   return false;
 }
-</script>
+  </script>
 
 </body>
 </html>
