@@ -1,8 +1,9 @@
+// middleware/auth.js
 const jwt = require("jsonwebtoken");
 
 module.exports = function (req, res, next) {
   try {
-    // Get token from Authorization header or cookie
+    // Get token from either Authorization header (Bearer <token>) or cookies
     const token =
       req.header("Authorization")?.replace("Bearer ", "") || req.cookies?.token;
 
@@ -13,9 +14,14 @@ module.exports = function (req, res, next) {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Attach user info to request
-    req.user = decoded;       // full payload from token
-    req.userId = decoded.id;  // convenience: directly store user ID
+    // decoded should contain { id: <userId>, ... } if created correctly in login route
+    if (!decoded.id) {
+      return res.status(400).json({ message: "Invalid token payload. User ID missing." });
+    }
+
+    // Attach user info to request object
+    req.user = decoded;     // store entire payload
+    req.userId = decoded.id; // store only the ID for quick use
 
     next();
   } catch (err) {
