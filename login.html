@@ -116,19 +116,20 @@ window.onload = function () {
     document.getElementById("rememberMe").checked = true;
   }
 
-  const loginTime = localStorage.getItem("loginTime");
-  const token = localStorage.getItem("token");
-  if (loginTime && token) {
-    const now = Date.now();
-    const threeDays = 3 * 24 * 60 * 60 * 1000;
-    if (now - loginTime > threeDays) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("loginTime");
-      alert("Session expired. Please login again.");
-      window.location.href = "login.html";
-    } else {
-      // Optional: auto-redirect if session still valid
-      // window.location.href = "dashboard.html";
+  // Only check session if we are NOT on login page
+  const currentPath = window.location.pathname.split("/").pop(); // e.g., "login.html"
+  if (currentPath !== "login.html") {
+    const loginTime = localStorage.getItem("loginTime");
+    const token = localStorage.getItem("token");
+    if (loginTime && token) {
+      const now = Date.now();
+      const threeDays = 3 * 24 * 60 * 60 * 1000;
+      if (now - loginTime > threeDays) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("loginTime");
+        alert("Session expired. Please login again.");
+        window.location.href = "login.html";
+      }
     }
   }
 };
