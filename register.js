@@ -22,7 +22,6 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     const res = await fetch(`${API_BASE}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({ name, email, password })
     });
 
@@ -32,6 +31,9 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
       alert(data.message || "Registration failed");
       return;
     }
+
+    // Save token for auto login (optional)
+    if (data.token) localStorage.setItem("token", data.token);
 
     alert("✅ Registration successful! Please login.");
     window.location.href = "login.html";
