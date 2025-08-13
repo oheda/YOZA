@@ -6,9 +6,15 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
+  const confirm = document.getElementById("confirm").value.trim();
 
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !confirm) {
     alert("Please fill in all fields.");
+    return;
+  }
+
+  if (password !== confirm) {
+    alert("Passwords do not match.");
     return;
   }
 
@@ -27,7 +33,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
       return;
     }
 
-    alert("Registration successful! Please login.");
+    alert("✅ Registration successful! Please login.");
     window.location.href = "login.html";
   } catch (err) {
     console.error("Register error:", err);
