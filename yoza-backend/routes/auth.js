@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
-const User = require("../models/User");
+const User = require("../models/user");
 
 // Get logged-in user's info
 router.get("/me", auth, async (req, res) => {
@@ -22,3 +22,4 @@ router.get("/me", auth, async (req, res) => {
 });
 
 module.exports = router;
+
