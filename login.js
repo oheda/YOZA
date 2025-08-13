@@ -1,19 +1,34 @@
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBTIdXrG2e4mSpZCWsDaRCXyVNU4hm0DSM",
-    authDomain: "yoza-d737b.firebaseapp.com",
-    projectId: "yoza-d737b",
-    storageBucket: "yoza-d737b.firebasestorage.app",
-    messagingSenderId: "154549910846",
-    appId: "1:154549910846:web:27f94ab5c58d823338006f"
-  };
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
+  if (!email || !password) {
+    alert("Please fill in both fields.");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://yoza.onrender.com/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Login successful!");
+      localStorage.setItem("token", data.token); // Save JWT
+      window.location.href = "/dashboard.html"; // Redirect after login
+    } else {
+      alert(data.message || "Login failed");
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    alert("Something went wrong. Please try again.");
+  }
+});

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FOODEAT | Online Store</title>
+  <title>YOZA Store</title>
   <link rel="stylesheet" href="shop.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
@@ -59,16 +59,36 @@
       border-radius: 25px;
       font-family: 'Poppins', sans-serif;
     }
+    .category-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 1rem auto;
+      flex-wrap: wrap;
+    }
+    .category-buttons button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #d97629;
+      color: white;
+      border-radius: 20px;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+    }
+    .category-buttons button:hover {
+      background-color: #aa571c;
+    }
   </style>
 </head>
 <body>
   <header class="hero-section">
-    <nav class="navbar">
+        <nav class="navbar">
       <div class="logo">YOZA</div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="#menu">Menu</a></li>
         <li><a href="about.html">About</a></li>
+        <li><a href="order.html">Order</a></li>
       </ul>
       <div class="cart-icon" id="cartIcon">🛒<span id="cartCount" style="color: red; margin-left: 5px;">0</span></div>
     </nav>
@@ -91,11 +111,69 @@
     <input type="text" id="searchInput" placeholder="Search for food...">
   </div>
 
+  <!-- Category Filter Buttons -->
+  <div class="category-buttons">
+    <button data-category="all">All</button>
+    <button data-category="men">Men</button>
+    <button data-category="women">Women</button>
+    <button data-category="electronics">Electronics</button>
+    <button data-category="food">Food</button>
+  </div>
+
   <section id="menu" class="top-list">
-    <h2>Anything you like?</h2>
+      <h2>Anything you like?</h2>
     <p class="subheading">Search around, take your time</p>
     <div class="menu-grid" id="menuGrid">
-      <a href="product1.html" class="menu-item" style="text-decoration: none;">
+      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
+        <img src="images/Buldak.png" alt="Men's Shirt">
+        <h3 style="color: #d97629;">Men's T-Shirt</h3>
+        <p>Comfortable cotton t-shirt</p>
+        <span class="price">₹499</span>
+        <span class="rating">⭐ 9.2</span>
+      </a>
+      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
+        <img src="images/Buldak.png" alt="Men's Shirt">
+        <h3 style="color: #d97629;">Men's T-Shirt</h3>
+        <p>Comfortable cotton t-shirt</p>
+        <span class="price">₹499</span>
+        <span class="rating">⭐ 9.2</span>
+      </a>
+      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
+        <img src="images/Buldak.png" alt="Men's Shirt">
+        <h3 style="color: #d97629;">Men's T-Shirt</h3>
+        <p>Comfortable cotton t-shirt</p>
+        <span class="price">₹499</span>
+        <span class="rating">⭐ 9.2</span>
+      </a>
+      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
+        <img src="images/Buldak.png" alt="Men's Shirt">
+        <h3 style="color: #d97629;">Men's T-Shirt</h3>
+        <p>Comfortable cotton t-shirt</p>
+        <span class="price">₹499</span>
+        <span class="rating">⭐ 9.2</span>
+      </a>
+      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
+        <img src="images/Buldak.png" alt="Men's Shirt">
+        <h3 style="color: #d97629;">Men's T-Shirt</h3>
+        <p>Comfortable cotton t-shirt</p>
+        <span class="price">₹499</span>
+        <span class="rating">⭐ 9.2</span>
+      </a>
+      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
+        <img src="images/Buldak.png" alt="Men's Shirt">
+        <h3 style="color: #d97629;">Men's T-Shirt</h3>
+        <p>Comfortable cotton t-shirt</p>
+        <span class="price">₹499</span>
+        <span class="rating">⭐ 9.2</span>
+      </a>
+      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
+        <img src="images/Buldak.png" alt="Men's Shirt">
+        <h3 style="color: #d97629;">Men's T-Shirt</h3>
+        <p>Comfortable cotton t-shirt</p>
+        <span class="price">₹499</span>
+        <span class="rating">⭐ 9.2</span>
+      </a>
+      <a href="product1.html" class="menu-item" data-category="food" style="text-decoration: none;">
         <img src="images/Buldak.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Buldak Noodles</h3>
         <p>White plate with dried shrimps</p>
@@ -196,7 +274,6 @@
     <div style="margin-top: 1rem; border-top: 1px solid #ccc; padding-top: 1rem;">
       <strong>Subtotal: ₹<span id="cartTotal">0</span></strong>
       <a href="checkout.html" style="display: inline-block; text-align: center; margin-top: 1rem; width: 100%; padding: 10px; background: #000; color: white; border: none; border-radius: 5px; text-decoration: none;">Checkout</a>
-    </div>
   </div>
 
   <script>
@@ -259,6 +336,21 @@
       items.forEach(item => {
         const name = item.querySelector("h3").textContent.toLowerCase();
         item.style.display = name.includes(query) ? "block" : "none";
+      });
+    });
+
+    // Category filter logic
+    document.querySelectorAll('.category-buttons button').forEach(button => {
+      button.addEventListener('click', () => {
+        const selected = button.getAttribute('data-category');
+        document.querySelectorAll('.menu-item').forEach(item => {
+          const itemCategory = item.getAttribute('data-category');
+          if (selected === 'all' || itemCategory === selected) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
       });
     });
 

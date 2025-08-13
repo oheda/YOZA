@@ -119,23 +119,27 @@
       margin: 1rem 0;
     }
 
-    .color-options {
+    .size-options {
       display: flex;
-      gap: 1rem;
+      gap: 0.5rem;
       margin: 1rem 0;
     }
 
-    .color-options span {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: inline-block;
-      cursor: pointer;
+    .size-options button {
+      padding: 0.5rem 1rem;
       border: 2px solid #ccc;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: 600;
+      color: #4e342e;
     }
 
-    .color1 { background: #d7ccc8; }
-    .color2 { background: #4e342e; }
+    .size-options button.selected {
+      background-color: #6d4c41;
+      color: #fff;
+      border-color: #6d4c41;
+    }
 
     .specs {
       display: flex;
@@ -287,12 +291,13 @@
 <body>
   <div class="container">
     <div class="left">
-      <img src="images/Buldak.png" alt="Chair" class="main">
+      <img src="images/Buldak.png" alt="Chair" class="main" id="mainImage">
       <p>Rotate</p>
       <div class="thumbnails">
-        <img src="images/Buldak.png" alt="Thumb1">
-        <img src="images/Buldak.png" alt="Thumb2">
-        <img src="images/Buldak.png" alt="Thumb3">
+        <img src="images/Buldak.png" alt="Thumb1" onclick="changeMainImage(this)">
+        <img src="images/buldak3.jpeg" alt="Thumb1" onclick="changeMainImage(this)">
+        <img src="images/buldak1.jpeg" alt="Thumb2" onclick="changeMainImage(this)">
+        <img src="images/buldak2.jpeg" alt="Thumb3" onclick="changeMainImage(this)">
       </div>
     </div>
     <div class="right">
@@ -307,10 +312,14 @@
       <p style="color: #a1887f; font-size: 0.9rem;">Buldak</p>
       <h2>Buldak Noodles Best with egg topping</h2>
       <div class="rating">It's a top rating lunch</div>
-      <div class="color-options">
-        <span class="color1"></span>
-        <span class="color2"></span>
+
+      <div class="size-options" id="sizeOptions">
+        <button onclick="selectSize(this)">S</button>
+        <button onclick="selectSize(this)">M</button>
+        <button onclick="selectSize(this)">L</button>
+        <button onclick="selectSize(this)">XL</button>
       </div>
+
       <p class="desc">Buldak</p>
       <div class="price">₹70</div>
       <div class="quantity">
@@ -325,7 +334,6 @@
     </div>
   </div>
 
-  <!-- 🛍️ Cart Panel -->
   <div id="cartPanel">
     <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 1rem;">Shopping Bag</div>
     <div id="cartItems"></div>
@@ -344,17 +352,33 @@
       localStorage.setItem('cart', JSON.stringify(cart));
     }
 
+    let selectedSize = "";
+
+    function selectSize(button) {
+      const buttons = document.querySelectorAll("#sizeOptions button");
+      buttons.forEach(btn => btn.classList.remove("selected"));
+      button.classList.add("selected");
+      selectedSize = button.textContent;
+    }
+
     function addToCart() {
       const qty = parseInt(document.getElementById('qty').textContent);
+
+      if (!selectedSize) {
+        alert("Please select a size.");
+        return;
+      }
+
       const product = {
         name: "Buldak",
         price: 70,
         qty: qty,
+        size: selectedSize,
         image: "images/Buldak.png"
       };
 
       let cart = getCart();
-      const existing = cart.find(item => item.name === product.name);
+      const existing = cart.find(item => item.name === product.name && item.size === product.size);
       if (existing) {
         existing.qty += qty;
       } else {
@@ -367,7 +391,9 @@
 
     function buyNow() {
       addToCart();
-      window.location.href = "checkout.html";
+      if (selectedSize) {
+        window.location.href = "checkout.html";
+      }
     }
 
     function changeQuantity(change) {
@@ -395,7 +421,7 @@
           <div class="cart-item">
             <img src="${item.image}" alt="item">
             <div class="cart-item-info">
-              <div style="font-weight: 600;">${item.name}</div>
+              <div style="font-weight: 600;">${item.name} (${item.size})</div>
               <div style="font-size: 0.9rem; color: gray;">Qty: ${item.qty}</div>
               <div class="remove-btn" onclick="removeItem(event, ${index})">Remove</div>
             </div>
@@ -430,6 +456,11 @@
         cartPanel.style.display = 'none';
       }
     });
+
+    function changeMainImage(img) {
+      const mainImage = document.getElementById('mainImage');
+      mainImage.src = img.src;
+    }
 
     updateCartUI();
   </script>
