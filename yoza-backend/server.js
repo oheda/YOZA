@@ -9,27 +9,27 @@ dotenv.config();
 
 const app = express();
 
-// ===== CORS CONFIGURATION =====
-// Change this to your actual frontend URL when deployed
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
-
+// CORS: allow GitHub Pages to call this API with cookies
 app.use(cors({
-  origin: "https://oheda.github.io",
+  origin: process.env.FRONTEND_URL || "http://localhost:3000",
   credentials: true
 }));
 
-// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes
+// Health check
+app.get("/", (req, res) => {
+  res.send("YOZA Backend is running 🚀");
+});
+
+// API routes
 app.use("/api", authRoutes);
 
-// ===== MONGODB CONNECTION =====
-mongoose.connect(process.env.MONGO_URI, {})
+// MongoDB
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB connected");
-    
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);
@@ -37,10 +37,5 @@ mongoose.connect(process.env.MONGO_URI, {})
   })
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err.message);
-    process.exit(1); // Stop app if DB fails
+    process.exit(1);
   });
-
-// ===== HEALTH CHECK ROUTE =====
-app.get("/", (req, res) => {
-  res.send("YOZA Backend is running 🚀");
-});
