@@ -46,19 +46,30 @@
       cursor: pointer;
       font-size: 0.8rem;
     }
+    /* Updated Search Bar */
     .search-bar {
-      margin: 1rem auto;
-      max-width: 400px;
       display: flex;
       justify-content: center;
+      margin: 1.5rem auto;
+      max-width: 500px;
     }
     .search-bar input {
-      width: 100%;
-      padding: 10px;
-      border: 2px solid #d97629;
-      border-radius: 25px;
+      flex: 1;
+      padding: 0.7rem 1rem;
+      border: 2px solid #e0cfc2;
+      border-radius: 30px;
+      font-size: 1rem;
+      color: #5d4037;
+      background: #fffaf6;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
       font-family: 'Poppins', sans-serif;
     }
+    .search-bar input:focus {
+      border-color: #8d6e63;
+      box-shadow: 0 0 8px rgba(141, 110, 99, 0.3);
+    }
+    /* Updated Category Buttons */
     .category-buttons {
       display: flex;
       justify-content: center;
@@ -67,16 +78,18 @@
       flex-wrap: wrap;
     }
     .category-buttons button {
-      padding: 8px 16px;
+      padding: 0.7rem 1.5rem;
       border: none;
-      background-color: #d97629;
+      border-radius: 30px;
+      background: #8d6e63;
       color: white;
-      border-radius: 20px;
+      font-weight: 600;
       font-family: 'Poppins', sans-serif;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
     .category-buttons button:hover {
-      background-color: #aa571c;
+      background: #6d4c41;
     }
   </style>
 </head>
@@ -124,119 +137,70 @@
       <h2>Anything you like?</h2>
     <p class="subheading">Search around, take your time</p>
     <div class="menu-grid" id="menuGrid">
-      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
-        <img src="images/Buldak.png" alt="Men's Shirt">
-        <h3 style="color: #d97629;">Men's T-Shirt</h3>
-        <p>Comfortable cotton t-shirt</p>
-        <span class="price">₹499</span>
-        <span class="rating">⭐ 9.2</span>
-      </a>
-      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
-        <img src="images/Buldak.png" alt="Men's Shirt">
-        <h3 style="color: #d97629;">Men's T-Shirt</h3>
-        <p>Comfortable cotton t-shirt</p>
-        <span class="price">₹499</span>
-        <span class="rating">⭐ 9.2</span>
-      </a>
-      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
-        <img src="images/Buldak.png" alt="Men's Shirt">
-        <h3 style="color: #d97629;">Men's T-Shirt</h3>
-        <p>Comfortable cotton t-shirt</p>
-        <span class="price">₹499</span>
-        <span class="rating">⭐ 9.2</span>
-      </a>
-      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
-        <img src="images/Buldak.png" alt="Men's Shirt">
-        <h3 style="color: #d97629;">Men's T-Shirt</h3>
-        <p>Comfortable cotton t-shirt</p>
-        <span class="price">₹499</span>
-        <span class="rating">⭐ 9.2</span>
-      </a>
-      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
-        <img src="images/Buldak.png" alt="Men's Shirt">
-        <h3 style="color: #d97629;">Men's T-Shirt</h3>
-        <p>Comfortable cotton t-shirt</p>
-        <span class="price">₹499</span>
-        <span class="rating">⭐ 9.2</span>
-      </a>
-      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
-        <img src="images/Buldak.png" alt="Men's Shirt">
-        <h3 style="color: #d97629;">Men's T-Shirt</h3>
-        <p>Comfortable cotton t-shirt</p>
-        <span class="price">₹499</span>
-        <span class="rating">⭐ 9.2</span>
-      </a>
-      <a href="product10.html" class="menu-item" data-category="food" style="text-decoration: none;">
-        <img src="images/Buldak.png" alt="Men's Shirt">
-        <h3 style="color: #d97629;">Men's T-Shirt</h3>
-        <p>Comfortable cotton t-shirt</p>
-        <span class="price">₹499</span>
-        <span class="rating">⭐ 9.2</span>
-      </a>
-      <a href="product1.html" class="menu-item" data-category="food" style="text-decoration: none;">
-        <img src="images/Buldak.png" alt="Noodles Three">
+      <a href="products/product1.html" class="menu-item" data-category="food" style="text-decoration: none;">
+        <img src="images/longsleeves.jpg" alt="Noodles Three">
         <h3 style="color: #d97629;">Buldak Noodles</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">₹70</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product2.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product2.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Buldak Noodles</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">₹70</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product3.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product3.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Noodles three</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">12$</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product4.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product4.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Noodles three</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">12$</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product5.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product5.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Noodles three</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">12$</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product6.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product6.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Noodles three</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">₹300</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product7.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product7.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Noodles three</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">12$</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product8.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product8.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Noodles three</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">12$</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product9.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product9.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Noodles three</h3>
         <p>White plate with dried shrimps</p>
         <span class="price">12$</span>
         <span class="rating">⭐ 8.1</span>
       </a>
-      <a href="product10.html" class="menu-item" style="text-decoration: none;">
+      <a href="products/product10.html" class="menu-item" style="text-decoration: none;">
         <img src="images/burger.png" alt="Noodles Three">
         <h3 style="color: #d97629;">Noodles three</h3>
         <p>White plate with dried shrimps</p>

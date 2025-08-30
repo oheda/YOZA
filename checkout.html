@@ -3,165 +3,189 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Checkout</title>
+  <title>My Cart</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3.11.0/dist/email.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    body { background-color: #fefaf6; padding: 40px; color: #4e342e; }
-    .container { display: flex; gap: 40px; max-width: 1200px; margin: auto; background: #fff3e6; padding: 40px; border-radius: 16px; box-shadow: 0 0 30px rgba(0,0,0,0.05); }
-    .left-section { flex: 2; }
-    .right-section { flex: 1; background: #fff8f0; padding: 30px; border-radius: 16px; }
-    h1 { font-size: 32px; margin-bottom: 10px; color: #5d4037; }
-    .section-title { margin: 30px 0 10px; font-weight: 600; }
-    input, select { padding: 12px; margin: 10px 0; width: 100%; border-radius: 8px; border: 1px solid #ccc; background: #fff; color: #4e342e; }
-    .input-group { display: flex; gap: 20px; }
-    .input-group > div { flex: 1; }
-    .delivery-methods, .payment-methods { display: flex; gap: 15px; margin: 10px 0; }
-    .delivery-methods button, .payment-methods button { padding: 12px 20px; border: none; border-radius: 8px; background: #e0dcd5; cursor: pointer; font-weight: 500; color: #4e342e; }
-    .delivery-methods button.active, .payment-methods button.active { background: #8d6e63; color: white; }
-    .right-section h3 { font-size: 20px; margin-bottom: 10px; color: #5d4037; }
-    .summary { margin-top: 20px; }
-    .summary-item { display: flex; justify-content: space-between; margin: 10px 0; }
-    .total { font-size: 22px; font-weight: bold; margin-top: 20px; color: #4e342e; }
-    .pay-btn { margin-top: 30px; padding: 14px; background: #6d4c41; color: white; text-align: center; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; }
-    .cart-items { max-height: 300px; overflow-y: auto; }
-    .cart-item { display: flex; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-    .cart-item img { width: 50px; border-radius: 6px; }
-    .cart-item-info { flex: 1; margin-left: 10px; }
-    @media (max-width: 900px) { .container { flex-direction: column; padding: 20px; } }
+    body { background: #fefaf6; padding: 40px; color: #4e342e; }
+    .cart-container { max-width: 1000px; margin: auto; background: #fff; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); overflow: hidden; }
+    h1 { padding: 30px; font-size: 32px; font-weight: 700; color: #3e2723; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 20px; text-align: left; font-size: 14px; color: #4e342e; }
+    th { font-weight: 600; color: #3e2723; }
+    tr { border-bottom: 1px solid #eee; }
+    .product { display: flex; align-items: center; gap: 15px; }
+    .product img { width: 60px; border-radius: 8px; }
+    .qty-control { display: flex; align-items: center; gap: 8px; }
+    .qty-control button { background: #eee; border: none; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-weight: 600; }
+    .remove-btn { cursor: pointer; color: #d32f2f; font-size: 18px; }
+    .shipping { padding: 30px; background: #f7f7f7; display: flex; justify-content: space-between; align-items: center; border-radius: 12px; margin: 20px; }
+    .shipping .options { display: flex; flex-direction: column; gap: 10px; }
+    .shipping label { cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .summary { padding: 30px; }
+    .summary-item { display: flex; justify-content: space-between; margin: 10px 0; font-size: 15px; }
+    .total { font-size: 20px; font-weight: 700; color: #3e2723; }
+    .checkout-btn { width: 100%; padding: 15px; background: #e53935; color: #fff; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 20px; }
+    .continue-shopping { margin: 20px 30px; display: inline-block; text-decoration: none; color: #6d4c41; font-size: 14px; }
+
+    /* Updated Customer Info */
+    .customer-info { padding: 20px; }
+    .customer-info h3 { margin-bottom: 10px; }
+    .customer-info .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .customer-info input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .customer-info input#address {
+      grid-column: 1 / -1; /* Make address full width */
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="left-section">
-      <h1>Checkout</h1>
-      <p>A checkout is a counter where you pay for things you are buying.</p>
+  <div class="cart-container">
+    <h1>My Cart</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>PRODUCT</th>
+          <th>PRICE</th>
+          <th>QTY</th>
+          <th>TOTAL</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="cartItems"></tbody>
+    </table>
 
-      <div class="section-title">1. Contact information</div>
-      <div class="input-group">
-        <div><input type="text" placeholder="First Name" id="firstName" /></div>
-        <div><input type="text" placeholder="Last Name" id="lastName" /></div>
-      </div>
-      <div class="input-group">
-        <div><input type="text" placeholder="Phone Number" id="phone" /></div>
-        <div><input type="email" placeholder="Email" id="email" /></div>
-        <div><input type="text" placeholder="Address" id="address" /></div>
-      </div>
-
-      <div class="section-title">2. Delivery method</div>
-      <div class="delivery-methods">
-        <button class="active">Delivery</button>
-        <button style="display:none;">Self pick up</button>
-      </div>
-      <input type="text" id="orderId" placeholder="Order ID" readonly />
-
-      <div class="section-title">3. Payment method</div>
-      <div class="payment-methods">
-        <button class="active">COD</button>
-        <button style="display:none;">Online Pay</button>
+    <!-- Customer Info -->
+    <div class="customer-info">
+      <h3>Customer Information</h3>
+      <div class="form-grid">
+        <input type="text" id="firstName" placeholder="First Name" />
+        <input type="text" id="lastName" placeholder="Last Name" />
+        <input type="text" id="phone" placeholder="Phone Number" />
+        <input type="email" id="email" placeholder="Email Address" />
+        <input type="text" id="address" placeholder="Full Address" />
       </div>
     </div>
 
-    <div class="right-section">
-      <h3>Your Cart</h3>
-      <div class="cart-items" id="cartItems"></div>
-
-      <div class="summary">
-        <div class="summary-item"><span>Subtotal</span><span>₹<span id="cartTotal">0</span></span></div>
-        <div class="summary-item"><span>Delivery</span><span>₹<span id="deliveryFee">30</span></span></div>
-        <div class="total">Total: ₹<span id="totalAmount">30</span></div>
+    <div class="shipping">
+      <div class="options">
+        <label><input type="radio" name="shipping" value="0" checked> Store pickup - FREE</label>
+        <label><input type="radio" name="shipping" value="10"> Delivery at home - ₹10</label>
       </div>
+    </div>
 
-      <button class="pay-btn">Place order</button>
+    <div class="summary">
+      <div class="summary-item"><span>SUBTOTAL TTC</span><span>₹<span id="cartTotal">0</span></span></div>
+      <div class="summary-item"><span>SHIPPING</span><span id="shippingCost">Free</span></div>
+      <div class="summary-item total"><span>TOTAL</span><span>₹<span id="totalAmount">0</span></span></div>
+      <button class="checkout-btn">Checkout</button>
+      <a href="shop.html" class="continue-shopping">← Continue shopping</a>
     </div>
   </div>
 
   <script>
     emailjs.init("cm8j8YV-GgZ-3x0_o");
 
-    function generateOrderID() {
-      let existingID = localStorage.getItem('orderID');
-      if (existingID) return existingID;
-      const newID = 'ORD' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-      localStorage.setItem('orderID', newID);
-      return newID;
-    }
-
-    function updateTotal() {
-      const deliveryType = document.querySelector('.delivery-methods .active')?.innerText;
+    function updateCart() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const subtotal = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
-      const deliveryFee = deliveryType === "Delivery" ? 30 : 0;
+      const tbody = document.getElementById("cartItems");
+      tbody.innerHTML = "";
+      let subtotal = 0;
 
-      document.getElementById("cartTotal").textContent = subtotal.toFixed(2);
-      document.getElementById("deliveryFee").textContent = deliveryFee.toFixed(2);
-      document.getElementById("totalAmount").textContent = (subtotal + deliveryFee).toFixed(2);
-    }
-
-    function loadCart() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartItemsContainer = document.getElementById('cartItems');
-      cartItemsContainer.innerHTML = '';
-
-      cart.forEach(item => {
-        const itemTotal = item.qty * item.price;
-        const itemHTML = `
-          <div class="cart-item">
-            <img src="${item.image}" alt="${item.name}" />
-            <div class="cart-item-info">
-              <strong>${item.name}</strong><br>
-              Qty: ${item.qty}
-            </div>
-            <div>₹${itemTotal.toFixed(2)}</div>
-          </div>
+      cart.forEach((item, index) => {
+        const total = item.qty * item.price;
+        subtotal += total;
+        const row = `
+          <tr>
+            <td>
+              <div class="product">
+                <img src="${item.image}" alt="${item.name}"/>
+                <div>
+                  <strong>${item.name}</strong><br>
+                  <small>Color: ${item.color || "Default"}</small>
+                </div>
+              </div>
+            </td>
+            <td>₹${item.price.toFixed(2)}</td>
+            <td>
+              <div class="qty-control">
+                <button onclick="changeQty(${index}, -1)">-</button>
+                <span>${item.qty}</span>
+                <button onclick="changeQty(${index}, 1)">+</button>
+              </div>
+            </td>
+            <td>₹${total.toFixed(2)}</td>
+            <td><span class="remove-btn" onclick="removeItem(${index})">&times;</span></td>
+          </tr>
         `;
-        cartItemsContainer.innerHTML += itemHTML;
+        tbody.innerHTML += row;
       });
 
+      document.getElementById("cartTotal").innerText = subtotal.toFixed(2);
       updateTotal();
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadCart();
-      document.getElementById('orderId').value = generateOrderID();
+    function changeQty(index, delta) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCart();
+    }
+
+    function removeItem(index) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCart();
+    }
+
+    function updateTotal() {
+      const subtotal = parseFloat(document.getElementById("cartTotal").innerText);
+      const shipping = document.querySelector('input[name="shipping"]:checked').value;
+      const shippingCost = parseFloat(shipping);
+      document.getElementById("shippingCost").innerText = shippingCost === 0 ? "Free" : `₹${shippingCost.toFixed(2)}`;
+      document.getElementById("totalAmount").innerText = (subtotal + shippingCost).toFixed(2);
+    }
+
+    document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+      radio.addEventListener("change", updateTotal);
     });
 
-    document.querySelectorAll('.delivery-methods button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.delivery-methods button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        updateTotal();
-      });
-    });
+    function generateOrderID() {
+      const newID = 'ORD' + Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+      return newID;
+    }
 
-    document.querySelectorAll('.payment-methods button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.payment-methods button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
-
-    document.querySelector('.pay-btn').addEventListener('click', () => {
+    document.querySelector(".checkout-btn").addEventListener("click", () => {
       const firstName = document.getElementById("firstName").value.trim();
       const lastName = document.getElementById("lastName").value.trim();
-      const email = document.getElementById("email").value.trim();
       const phone = document.getElementById("phone").value.trim();
-      const orderID = document.getElementById("orderId").value;
-      const delivery = document.querySelector('.delivery-methods .active')?.innerText;
-      const payment = document.querySelector('.payment-methods .active')?.innerText;
+      const email = document.getElementById("email").value.trim();
       const address = document.getElementById("address").value.trim();
-      const total = parseFloat(document.getElementById("totalAmount").innerText);
+      const total = document.getElementById("totalAmount").innerText;
+      const delivery = document.querySelector('input[name="shipping"]:checked').nextSibling.textContent.trim();
+      const payment = "COD";
+      const orderID = generateOrderID();
 
-      if (!firstName || !lastName || !email || !phone || !address || !delivery || !payment) {
-        alert("⚠️ Please fill in all required fields.");
+      if (!firstName || !lastName || !phone || !email || !address) {
+        alert("⚠️ Please fill in all fields.");
         return;
       }
 
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      const cartDetails = cart.map(item => `${item.name} x${item.qty} - ₹${item.price}`).join('\n');
+      const cartDetails = cart.map(item => `${item.name} x${item.qty} - ₹${item.price}`).join("\n");
 
-      // Save order to localStorage for orders.html
       const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
       existingOrders.push({
         name: `${firstName} ${lastName}`,
@@ -179,24 +203,25 @@
       emailjs.send("service_3tow59f", "template_ip6oa93", {
         firstName,
         lastName,
-        email,
         phone,
-        orderID,
-        delivery,
-        payment,
+        email,
         address,
         total,
-        cartDetails
+        cartDetails,
+        orderID,
+        delivery,
+        payment
       }).then(() => {
-        alert(`✅ Order sent to your email.`);
+        alert("✅ Order sent to your email.");
         localStorage.removeItem('cart');
-        localStorage.removeItem('orderID');
         window.location.href = "order.html";
       }).catch(err => {
         console.error("Email send error:", err);
         alert("❌ Failed to send order.");
       });
     });
+
+    document.addEventListener("DOMContentLoaded", updateCart);
   </script>
 </body>
 </html>
