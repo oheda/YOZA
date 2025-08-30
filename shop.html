@@ -13,6 +13,56 @@
       margin-left: 20px;
       color: #d97629;
     }
+
+    /* Hamburger menu button */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      margin-left: 15px;
+    }
+    .hamburger span {
+      height: 3px;
+      width: 25px;
+      background: #5d4037;
+      margin: 4px 0;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    /* Mobile menu dropdown */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #fff3e6;
+      position: absolute;
+      top: 60px;
+      right: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 1rem;
+      z-index: 9999;
+    }
+    .mobile-menu a {
+      text-decoration: none;
+      color: #6d4c41;
+      padding: 10px 0;
+      font-weight: 500;
+    }
+    .mobile-menu a:hover {
+      color: #8d6e63;
+    }
+
+    /* Show hamburger on small screens */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+
     #cartPanel {
       display: none;
       position: fixed;
@@ -95,7 +145,7 @@
 </head>
 <body>
   <header class="hero-section">
-        <nav class="navbar">
+    <nav class="navbar">
       <div class="logo">YOZA</div>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
@@ -103,8 +153,24 @@
         <li><a href="about.html">About</a></li>
         <li><a href="order.html">Order</a></li>
       </ul>
-      <div class="cart-icon" id="cartIcon">🛒<span id="cartCount" style="color: red; margin-left: 5px;">0</span></div>
+      <div style="display: flex; align-items: center;">
+        <div class="cart-icon" id="cartIcon">🛒<span id="cartCount" style="color: red; margin-left: 5px;">0</span></div>
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
     </nav>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="about.html">About</a>
+      <a href="order.html">Order</a>
+    </div>
+
     <div class="hero-content">
       <div class="text">
         <h1>I duh tur chi tak<br> Han en kual chhin la</h1>
@@ -241,6 +307,7 @@
   </div>
 
   <script>
+    // Cart logic
     function loadCart() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const cartItems = document.getElementById('cartItems');
@@ -290,6 +357,23 @@
       const icon = document.getElementById("cartIcon");
       if (!panel.contains(e.target) && !icon.contains(e.target)) {
         panel.style.display = 'none';
+      }
+    });
+
+    // Hamburger toggle
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if(hamburger){
+      hamburger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        mobileMenu.style.display = mobileMenu.style.display === "flex" ? "none" : "flex";
+      });
+    }
+
+    document.addEventListener("click", (e) => {
+      if(mobileMenu && hamburger && !hamburger.contains(e.target) && !mobileMenu.contains(e.target)){
+        mobileMenu.style.display = "none";
       }
     });
 
